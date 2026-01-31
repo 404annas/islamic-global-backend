@@ -15,7 +15,7 @@ const userSchema = new Schema({
     isVerified: { type: Boolean, default: false },
     isPaid: { type: Boolean, default: false },
     isBlocked: { type: Boolean, default: false },
-    registrationType: { type: String, enum: ["form", "plan"], required: true },
+    registrationType: { type: String, enum: ["form", "plan", "register"], required: true },
     trialExpiresAt: { type: Date },
 
     otp: String,

@@ -4,10 +4,10 @@ import mongoose, { Schema } from "mongoose";
 const progressSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     date: { type: Date, default: Date.now },
-    status: { type: String, enum: ["present", "absent", "late"], required: true },
+    status: { type: String, enum: ["present", "absent", "late", "active", "inactive", "completed", "hold"], required: true },
     timing: String,
     lesson: String,
-    performance: { type: String, enum: ["excellent", "improving", "needs_work"] },
+    performance: { type: String, enum: ["excellent","good", "average", "below_average", "poor", "improving", "needs_work"] },
     remarks: String,
     addedBy: { type: Schema.Types.ObjectId, ref: "User" }
 }, { timestamps: true });

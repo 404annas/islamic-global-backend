@@ -20,7 +20,29 @@ const globalLimiter = rateLimit({
 });
 
 app.use(globalLimiter);
-app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
+
+const rawOrigins = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : [];
+const allowedOrigins = rawOrigins.map(origin => origin.trim());
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
+
+        // Use a more robust check
+        const isAllowed = allowedOrigins.includes(origin);
+
+        if (!isAllowed) {
+            // Log exactly what was rejected to the terminal for easier debugging
+            console.log(`❌ Rejected Origin: ${origin}`);
+            return callback(null, false); // Just reject without throwing a 500 error
+        }
+
+        return callback(null, true);
+    },
+    credentials: true
+}));
+
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());

@@ -1,3 +1,7 @@
 .env
 
 node_modules
+
+create-admin.js
+create-custom-admin.js
+CREATE_ADMIN_SCRIPT.md
